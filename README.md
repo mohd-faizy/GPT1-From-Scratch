@@ -36,7 +36,7 @@ This project uses `uv` for fast package management.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/GPT1-From-Scratch.git
+   git clone https://github.com/mohd-faizy/GPT1-From-Scratch.git
    cd GPT1-From-Scratch
    ```
 
@@ -232,6 +232,19 @@ Artificial Intelligence is a field of study that ...
 -   **PyTorch Documentation**: [https://pytorch.org/docs/stable/index.html](https://pytorch.org/docs/stable/index.html)
 -   **HuggingFace Transformers**: [https://huggingface.co/docs/transformers/index](https://huggingface.co/docs/transformers/index)
 
-## 📜 License
+## ⚖️ License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+---
+
+## 🔗 Connect with me
+
+<div align="center">
+
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/F4izy)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohd-faizy/)
+[![Stack Exchange](https://img.shields.io/badge/Stack_Exchange-1E5397?style=for-the-badge&logo=stack-exchange&logoColor=white)](https://ai.stackexchange.com/users/36737/faizy)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mohd-faizy)
+
+</div>
