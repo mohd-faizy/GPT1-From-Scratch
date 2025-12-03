@@ -156,7 +156,7 @@ Understanding how the components interact:
 
 ## 📚 References
 
--   **Original Paper**: [Improving Language Understanding by Generative Pre-Training](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf) (Radford et al., 2018)
+-   **Original Paper**: [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) (Radford et al., 2018)
 -   **PyTorch Documentation**: [https://pytorch.org/docs/stable/index.html](https://pytorch.org/docs/stable/index.html)
 -   **HuggingFace Transformers**: [https://huggingface.co/docs/transformers/index](https://huggingface.co/docs/transformers/index)
 
