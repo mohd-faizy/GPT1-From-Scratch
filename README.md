@@ -154,6 +154,78 @@ Understanding how the components interact:
     -   Backpropagates gradients and updates weights using `AdamW`.
     -   Evaluates on validation set and saves checkpoints.
 
+## 🚀 Getting Started
+
+Follow these steps to get up and running with the GPT-1 implementation.
+
+### 1. Verify Installation
+
+First, ensure that the environment is set up correctly and all dependencies are installed by running the unit tests.
+
+```bash
+uv run tests/test_model.py
+```
+
+**Expected Output:**
+You should see output indicating that all tests passed, similar to:
+```
+test_attention_shape ... ok
+test_gpt_forward ... ok
+...
+Ran 5 tests in 1.234s
+
+OK
+```
+
+### 2. Train the Model
+
+Train the model on a small subset of the data to verify the training loop.
+
+```bash
+uv run scripts/train.py --batch_size 4 --epochs 1 --subset 100
+```
+
+**What this does:**
+- Loads the WikiText dataset (or a subset).
+- Initializes the GPT-1 model.
+- Runs the training loop for 1 epoch.
+- Saves checkpoints to `checkpoints/`.
+
+**Expected Output:**
+You will see a progress bar and loss logging:
+```
+Using device: cuda
+Configuration: ...
+Epoch 1/1: 100%|██████████| 25/25 [00:05<00:00,  4.50it/s, loss=3.4567]
+Epoch 1: Train Loss = 3.4567, Val Loss = 3.4000
+Training completed.
+```
+
+### 3. Generate Text
+
+Use the trained model (or the initialized one if training was short) to generate text.
+
+```bash
+uv run scripts/generate.py --prompt "Artificial Intelligence is" --model_path checkpoints/best_model.pth
+```
+
+**What this does:**
+- Loads the model weights from `checkpoints/best_model.pth`.
+- Tokenizes the input prompt.
+- Generates new tokens using top-k sampling.
+- Decodes and prints the result.
+
+**Expected Output:**
+```
+Using device: cuda
+Loaded model from checkpoints/best_model.pth
+
+Generated Text:
+--------------------------------------------------
+Artificial Intelligence is a field of study that ...
+--------------------------------------------------
+```
+
 ## 📚 References
 
 -   **Original Paper**: [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) (Radford et al., 2018)

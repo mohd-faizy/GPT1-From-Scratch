@@ -1,7 +1,0 @@
-2025-12-03 15:54:41,332 - INFO - Using device: cpu
-2025-12-03 15:54:41,333 - INFO - Configuration: GPTConfig(vocab_size=40478, max_seq_len=512, n_layer=12, n_head=12, d_model=768, d_ff=3072, dropout=0.1, batch_size=8, lr=0.00025, weight_decay=0.01, epochs=3, warmup_steps=2000, grad_clip=1.0, dataset_name='wikitext', dataset_config='wikitext-103-raw-v1', subset_size=None, temperature=0.7, top_k=40)
-2025-12-03 15:54:49,778 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-2025-12-03 15:54:51,772 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-2025-12-03 15:55:24,235 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-2025-12-03 15:55:56,277 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-2025-12-03 15:56:42,624 - INFO - Model parameters: 124,046,592

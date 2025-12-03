@@ -24,6 +24,7 @@ class TestGPTModel(unittest.TestCase):
             d_ff=256
         )
         self.model = GPT(self.config)
+        self.model.eval() # Ensure deterministic behavior for tests
 
     def test_output_shape(self):
         batch_size = 2
