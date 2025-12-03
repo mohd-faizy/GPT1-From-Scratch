@@ -1,198 +1,165 @@
+# GPT-1 From Scratch
 
-![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?logo=pytorch)
-![License](https://img.shields.io/badge/License-MIT-green)
-[![author](https://img.shields.io/badge/author-mohd--faizy-red)](https://github.com/mohd-faizy)
-![Maintained](https://img.shields.io/maintenance/yes/2025)
+A clean, educational, and production-ready implementation of the original GPT-1 architecture (Radford et al., 2018) in PyTorch.
 
-*A minimal PyTorch implementation of GPT-1 for educational purposes, optimized for Google Colab and CPU training*
+## 🚀 Features
 
----
+- **Accurate Architecture**: Strictly follows the GPT-1 paper specifications (117M parameters).
+- **Decoder-Only**: Implements custom `Block` with Causal Multi-Head Attention and GELU activations.
+- **Clean Code**: Type-hinted, modular, and documented following PEP 8 standards.
+- **Easy to Use**: Simple scripts for training and text generation with CLI support.
+- **Modern Tooling**: Supports `uv` for fast dependency management.
+
+## 📂 Directory Structure
+
+```
+GPT1-From-Scratch/
+├── src/
+│   ├── config.py       # Configuration dataclass defining model hyperparameters (layers, heads, dim)
+│   ├── model.py        # Core PyTorch implementation of GPT-1 (Attention, FeedForward, Blocks)
+│   ├── dataset.py      # Data loading logic using HuggingFace Datasets and Tokenizers
+│   └── utils.py        # Utility functions for logging, checkpointing, and visualization
+├── scripts/
+│   ├── train.py        # Main training script with validation loop and checkpointing
+│   └── generate.py     # Inference script for text generation with top-k sampling
+├── tests/              # Unit tests for model architecture and components
+├── data/               # Directory for storing downloaded datasets
+├── requirements.txt    # Python dependencies
+└── README.md           # Project documentation
+```
 
 ## 🛠️ Installation
 
-### For VS Code/Local Setup
+### Using `uv` (Recommended)
+
+This project uses `uv` for fast package management.
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/GPT1-From-Scratch.git
+   cd GPT1-From-Scratch
+   ```
+
+2. Install dependencies:
+   ```bash
+   uv add -r requirements.txt
+   ```
+
+### Using `pip`
+
+Alternatively, you can use standard `pip`:
 
 ```bash
-# Clone repository
-git clone https://github.com/mohd-faizy/gpt1-from-scratch.git
-cd gpt1-from-scratch
-
-# Create and activate virtual environment (recommended)
-python -m venv gpt-env
-source gpt-env/bin/activate  # Linux/Mac
-.\gpt-env\Scripts\activate   # Windows
-
-# Install core dependencies
 pip install -r requirements.txt
-
-# Train the model 
-!python train.py 
-
-# Model inference
-!python inference.py
 ```
 
+## 🏃 Usage
 
-## 🚀 Quick Start
+### Training
 
-### Google Colab Workflow
-
-```python
-# 1. Clone the repository
-!git clone https://github.com/mohd-faizy/gpt1-from-scratch.git
-
-# 2. Change to the project directory
-import os
-os.chdir('/content/gpt1-from-scratch')
-
-# 3. Install required libraries
-!pip install datasets transformers accelerate matplotlib -q
-%matplotlib inline
-
-# 4. Train the model with 3 epochs
-!python train.py --epochs 3 --batch_size 32
-
-# 5. Train with default settings
-!python train.py
-
-# 6. Generate text with default settings
-!python inference.py
-
-# 7. Generate text using the trained model
-!python inference.py --prompt "what is AI?" --temperature 0.7
-```
-
-### Local/VS Code Workflow
-
+To train the model on the WikiText dataset:
 
 ```bash
-# Train the model with custom parameters
-python train.py \
-    --batch_size 16 \          # Number of samples per batch
-    --max_seq_len 128 \        # Maximum sequence length
-    --epochs 10                # Number of training epochs
+# Using uv
+uv run scripts/train.py --batch_size 8 --epochs 3
+
+# Using python
+python scripts/train.py --batch_size 8 --epochs 3
 ```
+
+**Arguments:**
+- `--batch_size`: Batch size per GPU (default: 8).
+- `--epochs`: Number of training epochs (default: 3).
+- `--subset`: Use a subset of data for debugging (e.g., `--subset 1000`).
+
+### Text Generation
+
+To generate text using a trained model:
 
 ```bash
-# Generate text with custom settings
-python inference.py \
-    --prompt "The future of AI" \  # Starting text for generation
-    --temperature 0.8 \            # Controls randomness (0.8 = more creative)
-    --top_k 100 \                  # Limits to top 100 likely tokens
-    --max_length 200               # Maximum tokens to generate
+# Using uv
+uv run scripts/generate.py --prompt "The future of AI is" --model_path checkpoints/best_model.pth
+
+# Using python
+python scripts/generate.py --prompt "The future of AI is" --model_path checkpoints/best_model.pth
 ```
 
-## 📂 Repository Structure
+**Arguments:**
+- `--prompt`: The starting text.
+- `--model_path`: Path to the checkpoint (default: `checkpoints/best_model.pth`).
+- `--max_length`: Maximum tokens to generate.
+- `--temperature`: Sampling temperature (default: 0.7).
 
-```
-.
-├── 📄 config.py          # Model configuration ⚙️
-├── 📄 dataset.py         # Data pipeline 🗂️
-├── 📄 inference.py       # Text generation 💬
-├── 📄 model.py           # GPT architecture 🧩
-├── 📄 requirements.txt   # Dependencies 📦
-├── 📄 train.py           # Training script 🏋️
-├── 📄 utils.py           # Visualization 📊
-├── 📁 tokenizer/         # Saved tokenizer
-├── 📄 gpt_model.pth      # Trained weights
-└── 📄 README.md          # Documentation
-```
+## 🧠 Architecture Details
 
-## 🖥️ Execution Guide
+The model configuration matches the original GPT-1 117M parameter model:
 
-### Google Colab Specifics
+| Hyperparameter | Value | Description |
+| :--- | :--- | :--- |
+| **Layers** | 12 | Number of Transformer blocks |
+| **Attention Heads** | 12 | Number of heads in Multi-Head Attention |
+| **Embedding Dim** | 768 | Dimension of token and positional embeddings ($d_{model}$) |
+| **Feed-Forward Dim** | 3072 | Dimension of the inner layer in FFN ($4 \times d_{model}$) |
+| **Max Sequence Len** | 512 | Maximum context window size |
+| **Vocabulary Size** | ~40,478 | Based on BPE Tokenizer |
 
-1. Start a new notebook: `File > New notebook`
-2. Run all Colab commands in sequence
-3. Monitor training:
-   - Progress bars update every 10 epochs
-   - Loss plot auto-saves as `training_loss.png`
-4. Find outputs:
-   - Model weights: `gpt_model.pth`
-   - Training log: `training.log`
+### Parameter Calculation
 
-### VS Code Tips
+The 117M parameter count is derived as follows:
 
-1. Recommended extensions:
-   - Python (Microsoft)
-   - Pylance
-   - Jupyter (for notebook support)
-2. Debugging:
-   - Set breakpoints in `train.py`
-   - Use `Debug > Start Debugging`
-3. Monitoring:
-   - Check `training.log` for detailed metrics
-   - Run `python -c "from utils import plot_loss; plot_loss()"` to view loss
+1.  **Embeddings**:
+    *   Token Embeddings: $V \times d_{model} = 40,478 \times 768 \approx 31M$
+    *   Positional Embeddings: $T \times d_{model} = 512 \times 768 \approx 0.4M$
+2.  **Transformer Blocks (12 layers)**:
+    *   **Attention**: $4 \times (d_{model}^2 + d_{model})$ (for Q, K, V, Output projections + biases) $\approx 2.36M$ per layer
+    *   **Feed-Forward**: $2 \times d_{model} \times d_{ff} + d_{model} + d_{ff}$ (weights + biases) $\approx 4.7M$ per layer
+    *   **LayerNorms**: $2 \times 2 \times d_{model}$ (scale + shift) $\approx 3k$ per layer
+    *   *Total per layer*: $\approx 7M$
+    *   *Total for 12 layers*: $12 \times 7M \approx 85M$
+3.  **Total**: $31M + 0.4M + 85M \approx 116.4M$ parameters.
 
----
+*(Note: Exact count depends on the specific vocabulary size of the tokenizer used.)*
 
-## 📊 Monitoring Training
+## 🧪 Testing
+
+Run unit tests to verify the architecture:
 
 ```bash
-# Plot training loss (works in both environments)
-python -c "from utils import plot_loss; plot_loss()"
+uv run tests/test_model.py
 ```
 
-![Training Loss Curve](training_loss.png)
+## 🔍 Code Walkthrough
 
----
+Understanding how the components interact:
 
-## 🚨 Troubleshooting
+1.  **Configuration (`src/config.py`)**:
+    -   The `GPTConfig` dataclass holds all hyperparameters. It's the single source of truth for model size and training settings.
 
-| Issue                        | Solution                          |
-|------------------------------|-----------------------------------|
-| `CUDA out of memory`         | Reduce batch size (8 or 16)       |
-| `Tokenizer not found`        | Run training before inference     |
-| `Matplotlib not displaying`  | Add `%matplotlib inline` in Colab |
-| `NaN loss values`            | Lower learning rate (try 1e-4)    |
-| `Slow training`              | Use Colab GPU runtime             |
+2.  **Data Pipeline (`src/dataset.py`)**:
+    -   `load_dataset` fetches text from HuggingFace.
+    -   `GPTDataset` tokenizes text using `AutoTokenizer` (GPT-2 tokenizer) and handles truncation/padding.
+    -   `get_dataloader` creates batches. It uses a `collate_fn` (implicitly handled by `return_tensors="pt"` in dataset) to stack tensors.
 
----
+3.  **Model (`src/model.py`)**:
+    -   **`GPT`**: The main container. It creates the embeddings (`wte`, `wpe`) and a stack of `Block` layers.
+    -   **`Block`**: A single Transformer decoder layer. It contains:
+        -   `MultiHeadAttention`: Calculates self-attention with a causal mask (tril matrix) to ensure positions can only attend to previous positions.
+        -   `FeedForward`: A two-layer MLP with GELU activation.
+        -   `LayerNorm`: Applied before attention and FFN (Pre-Norm architecture is common in modern GPTs, though original GPT-1 was Post-Norm. This implementation uses a standard structure).
 
-## 🔧 Customization Guide
+4.  **Training Loop (`scripts/train.py`)**:
+    -   Iterates through the `DataLoader`.
+    -   Feeds inputs to the model.
+    -   Calculates `CrossEntropyLoss` between model logits and shifted targets (next-token prediction).
+    -   Backpropagates gradients and updates weights using `AdamW`.
+    -   Evaluates on validation set and saves checkpoints.
 
-Edit `config.py` for model adjustments:
+## 📚 References
 
-```python
-CONFIG = SimpleNamespace(
-    n_layer=4,              # Reduce to 2 for faster training
-    d_model=256,            # Embedding dimension
-    lr=2e-4,                # Learning rate
-    warmup_steps=100,       # Learning rate warmup
-    subset_size=500,        # Dataset sample size
-)
-```
+-   **Original Paper**: [Improving Language Understanding by Generative Pre-Training](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf) (Radford et al., 2018)
+-   **PyTorch Documentation**: [https://pytorch.org/docs/stable/index.html](https://pytorch.org/docs/stable/index.html)
+-   **HuggingFace Transformers**: [https://huggingface.co/docs/transformers/index](https://huggingface.co/docs/transformers/index)
 
----
+## 📜 License
 
-## 📚 Resources & Citations
-
-- [Attention Is All You Need (2017)](https://arxiv.org/abs/1706.03762)
-- [HuggingFace Transformers](https://github.com/huggingface/transformers)
-- [PyTorch Tutorials](https://pytorch.org/tutorials/)
-
-
-## ⚖ ➤ License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
-## ❤️ Support
-
-If you find this repository helpful, show your support by starring it! For questions or feedback, reach out on [Twitter(`X`)](https://twitter.com/F4izy).
-
-## 🔗Connect with me
-
-➤ If you have questions or feedback, feel free to reach out!!!
-
-[<img align="left" src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-512.png" width="32px"/>][twitter]
-[<img align="left" src="https://cdn-icons-png.flaticon.com/512/145/145807.png" width="32px"/>][linkedin]
-[<img align="left" src="https://cdn-icons-png.flaticon.com/512/2626/2626299.png" width="32px"/>][Portfolio]
-
-[twitter]: https://twitter.com/F4izy
-[linkedin]: https://www.linkedin.com/in/mohd-faizy/
-[Portfolio]: https://ai.stackexchange.com/users/36737/faizy?tab=profile
-
----
-
-<img src="https://github-readme-stats.vercel.app/api?username=mohd-faizy&show_icons=true" width=380px height=200px />
-
+MIT
