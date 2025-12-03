@@ -1,1 +1,36 @@
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Environment Variables
+.env
+*.env
+
+# IDE Settings
+.vscode/
+.idea/
+
+# Project Artifacts
+saved_models/
+*.pkl
+*.joblib
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Vector Stores
+chroma_db/
+*.sqlite3
+
+# Logs
+*.log
